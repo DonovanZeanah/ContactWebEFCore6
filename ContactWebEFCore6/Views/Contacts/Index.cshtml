@@ -4,7 +4,25 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+@*
+<div class="text-center">
+<h1 class="display-4">Welcome</h1>
+<p>Learn about <a href="https://docs.microsoft.com"></a>.</p>
+</diV>
+add two: 2 + 2 = <span id="theResult">  </span>
+
+@section scripts
+{
+    <script>
+    $(function(){
+        
+var x = addTwo(2, 3);
+$("#theResult").text(x);
+    });
+    </script>
+*@
+
+    <h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
