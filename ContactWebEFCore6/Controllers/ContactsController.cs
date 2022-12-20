@@ -76,7 +76,7 @@ namespace ContactWebEFCore6.Controllers
             UpdateStateAndResetModelState(contact);
             if (ModelState.IsValid)
             {
-                _context.Add(contact);
+                await _context.Contacts.AddAsync(contact);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
