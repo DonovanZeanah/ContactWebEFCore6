@@ -105,12 +105,22 @@ namespace MyContactManagerRepositories
       return await DeleteAsync(contact.Id);
     }
 
-    Task<List<State>> IContactsRepository.GetAllAsync()
+    /*Task<List<State>> IContactsRepository.GetAllAsync()
     {
       throw new NotImplementedException();
     }
 
     Task<State> IContactsRepository.GetAsync(int id)
+    {
+      throw new NotImplementedException();
+    }*/
+
+    public Task<List<Contact>> GetAllAsync(string userId)
+    {
+      throw new NotImplementedException();
+    }
+
+    public Task<State> GetAsync(int id, string userId)
     {
       throw new NotImplementedException();
     }
