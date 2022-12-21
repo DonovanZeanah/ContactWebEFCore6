@@ -20,13 +20,13 @@ namespace MyContactManagerRepositories
     
     public async Task<List<State>> GetAllAsync()
     {
-      var allStatesData = await _context.States.OrderBy(x => x.Name).ToListAsync();
+      var allStatesData = await _context.States.AsNoTracking().OrderBy(x => x.Name).ToListAsync();
       return allStatesData;
     }
 
     public async Task<State> GetAsync(int id)
     {
-      var state = await _context.States.SingleOrDefaultAsync(x => x.Id == id);
+      var state = await _context.States.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
       return state;
     }
     public async Task<int> AddOrUpdateAsync(State state)
@@ -60,7 +60,7 @@ namespace MyContactManagerRepositories
 
     public async Task<bool> ExistsAsync(int id)
     {
-      return await _context.States.AnyAsync(x => x.Id == id);
+      return await _context.States.AsNoTracking().AnyAsync(x => x.Id == id);
 
     }
 

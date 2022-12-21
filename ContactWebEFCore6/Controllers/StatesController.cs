@@ -38,7 +38,7 @@ namespace ContactWebEFCore6.Controllers
     private async Task<List<State>> GetStatesFromSession()
     {
       var session = HttpContext.Session;
-      var statesData = session.GetString(ContactCacheContstants.ALL_STATES_DATA_SESSION);
+      var statesData = session.GetString(ContactCacheConstants.ALL_STATES_DATA_SESSION);
       if (!string.IsNullOrWhiteSpace(statesData))
       {
         return JsonConvert.DeserializeObject<List<State>>(statesData);
@@ -52,7 +52,7 @@ namespace ContactWebEFCore6.Controllers
     private async Task<List<State>> GetStatesFromCache()
     {
       var states = new List<State>();
-      if (!_cache.TryGetValue(ContactCacheContstants.ALL_STATES_DATA, out states))
+      if (!_cache.TryGetValue(ContactCacheConstants.ALL_STATES_DATA, out states))
       {
         var allStatesData = await _statesService.GetAllAsync();
 
