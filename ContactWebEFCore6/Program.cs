@@ -2,6 +2,8 @@ using ContactWebEFCore6.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyContactManagerData;
+using MyContactManagerRepositories;
+using MyContactManagerServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache(); builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromSeconds(120); options.Cookie.HttpOnly = true; options.Cookie.IsEssential = true; });
+
+builder.Services.AddScoped<IStatesRepository, StatesRepository>();
+builder.Services.AddScoped<IStatesService, StatesService>();
+
 
 var app = builder.Build();
 
