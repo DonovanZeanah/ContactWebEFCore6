@@ -56,7 +56,7 @@ namespace ContactWebEFCore6.Controllers
       {
         var allStatesData = await _statesService.GetAllAsync();
 
-        _cache.Set(ContactCacheContstants.ALL_STATES_DATA, allStatesData, TimeSpan.FromDays(1));
+        _cache.Set(ContactCacheConstants.ALL_STATES_DATA, allStatesData, TimeSpan.FromDays(1));
         return allStatesData;
       }
       return states;
@@ -95,7 +95,7 @@ namespace ContactWebEFCore6.Controllers
       if (ModelState.IsValid)
       {
         await _statesService.AddOrUpdateAsync(state);
-        _cache.Remove(ContactCacheContstants.ALL_STATES_DATA);
+        _cache.Remove(ContactCacheConstants.ALL_STATES_DATA);
         return RedirectToAction(nameof(Index));
       }
       return View(state);
@@ -134,7 +134,7 @@ namespace ContactWebEFCore6.Controllers
         try
         {
           await _statesService.AddOrUpdateAsync(state);
-          _cache.Remove(ContactCacheContstants.ALL_STATES_DATA);
+          _cache.Remove(ContactCacheConstants.ALL_STATES_DATA);
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -186,7 +186,7 @@ namespace ContactWebEFCore6.Controllers
       //    await _statesService.DeleteAsync(id);
       //}
 
-      _cache.Remove(ContactCacheContstants.ALL_STATES_DATA);
+      _cache.Remove(ContactCacheConstants.ALL_STATES_DATA);
       return RedirectToAction(nameof(Index));
     }
 
