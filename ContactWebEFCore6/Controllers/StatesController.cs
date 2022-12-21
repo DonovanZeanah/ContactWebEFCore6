@@ -1,70 +1,76 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ContactWebModels;
 using MyContactManagerData;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Caching.Memory;
 using ContactWebEFCore6.Models;
+using MyContactManagerServices;
 
 namespace ContactWebEFCore6.Controllers
 {
   public class StatesController : Controller
   {
-    private readonly MyContactManagerDbContext _context;
-    private readonly IMemoryCache _memoryCache;
+    private readonly IMemoryCache _cache;
+    private IStatesService _statesService;
 
-    public StatesController(MyContactManagerDbContext context, IMemoryCache memoryCache)
+    //public StatesController(MyContactManagerDbContext context, IMemoryCache cache)
+    public StatesController(IStatesService statesService, IMemoryCache cache)
+
     {
-      _context = context;
-      _memoryCache = memoryCache; //'hydrating the cache'
+      _statesService = statesService;
+      _cache = cache;
     }
 
     // GET: States
-
     public async Task<IActionResult> Index()
     {
-      // List<State> states = await GetStates();
+      //List<State> states = await GetStatesFromSession();
       var states = await GetStatesFromCache();
       return View(states);
+    }
+
+    private async Task<List<State>> GetStatesFromSession()
+    {
+      var session = HttpContext.Session;
+      var statesData = session.GetString(ContactCacheContstants.ALL_STATES_DATA_SESSION);
+      if (!string.IsNullOrWhiteSpace(statesData))
+      {
+        return JsonConvert.DeserializeObject<List<State>>(statesData);
+      }
+
+      var states = await _statesService.GetAllAsync();
+      session.SetString("StatesData", JsonConvert.SerializeObject(states));
+      return states;
     }
 
     private async Task<List<State>> GetStatesFromCache()
     {
       var states = new List<State>();
-      if (!_memoryCache.TryGetValue(ContactCacheConstants.statesData, out states))
+      if (!_cache.TryGetValue(ContactCacheContstants.ALL_STATES_DATA, out states))
       {
-        states = await _context.States.OrderBy(x => x.Name).ToListAsync();
-        var cacheEntryOptions = new MemoryCacheEntryOptions()
-            .SetSlidingExpiration(TimeSpan.FromMinutes(5));
-        _memoryCache.Set(ContactCacheConstants.statesData, states, cacheEntryOptions);
-      }
+        var allStatesData = await _statesService.GetAllAsync();
 
-      return states;
-    }
-
-    private async Task<List<State>> GetStates()
-    {
-      var session = HttpContext.Session;
-      var statesData = session.GetString("statesData");
-      if (!string.IsNullOrWhiteSpace(statesData))
-      {
-        return JsonConvert.DeserializeObject<List<State>>(session.GetString(ContactCacheConstants.statesData));
+        _cache.Set(ContactCacheContstants.ALL_STATES_DATA, allStatesData, TimeSpan.FromDays(1));
+        return allStatesData;
       }
-      List<State> states = await _context.States.OrderBy(x => x.Name).ToListAsync();
-      session.SetString(ContactCacheConstants.statesData, JsonConvert.SerializeObject(states));
       return states;
     }
 
     // GET: States/Details/5
     public async Task<IActionResult> Details(int? id)
     {
-      if (id == null || _context.States == null)
+      if (id == null || await _statesService.GetAllAsync() == null)
       {
         return NotFound();
       }
 
-      var state = await _context.States
-          .FirstOrDefaultAsync(m => m.Id == id);
+      var state = await _statesService.GetAsync((int)id);
       if (state == null)
       {
         return NotFound();
@@ -88,9 +94,8 @@ namespace ContactWebEFCore6.Controllers
     {
       if (ModelState.IsValid)
       {
-        _context.Add(state);
-        await _context.SaveChangesAsync();
-        _memoryCache.Remove(ContactCacheConstants.statesData);
+        await _statesService.AddOrUpdateAsync(state);
+        _cache.Remove(ContactCacheContstants.ALL_STATES_DATA);
         return RedirectToAction(nameof(Index));
       }
       return View(state);
@@ -99,12 +104,12 @@ namespace ContactWebEFCore6.Controllers
     // GET: States/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
-      if (id == null || _context.States == null)
+      if (id == null || await _statesService.GetAllAsync() == null)
       {
         return NotFound();
       }
 
-      var state = await _context.States.FindAsync(id);
+      var state = await _statesService.GetAsync((int)id);
       if (state == null)
       {
         return NotFound();
@@ -128,10 +133,8 @@ namespace ContactWebEFCore6.Controllers
       {
         try
         {
-          _context.Update(state);
-          await _context.SaveChangesAsync();
-          _context.States.Remove(state);
-
+          await _statesService.AddOrUpdateAsync(state);
+          _cache.Remove(ContactCacheContstants.ALL_STATES_DATA);
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -152,13 +155,12 @@ namespace ContactWebEFCore6.Controllers
     // GET: States/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-      if (id == null || _context.States == null)
+      if (id == null || await _statesService.GetAllAsync() == null)
       {
         return NotFound();
       }
 
-      var state = await _context.States
-          .FirstOrDefaultAsync(m => m.Id == id);
+      var state = await _statesService.GetAsync((int)id);
       if (state == null)
       {
         return NotFound();
@@ -172,25 +174,25 @@ namespace ContactWebEFCore6.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-      if (_context.States == null)
+      if (await _statesService.GetAllAsync() == null)
       {
         return Problem("Entity set 'MyContactManagerDbContext.States'  is null.");
       }
-      var state = await _context.States.FindAsync(id);
-      if (state != null)
-      {
-        _context.States.Remove(state);
-      }
+      await _statesService.DeleteAsync(id);
 
-      await _context.SaveChangesAsync();
+      //var state = await _statesService.GetAsync(id);
+      //if (state != null)
+      //{
+      //    await _statesService.DeleteAsync(id);
+      //}
+
+      _cache.Remove(ContactCacheContstants.ALL_STATES_DATA);
       return RedirectToAction(nameof(Index));
-      _context.States.Remove(state);
-
     }
 
     private bool StateExists(int id)
     {
-      return _context.States.Any(e => e.Id == id);
+      return Task.Run(async () => await _statesService.ExistsAsync(id)).Result;
     }
   }
 }

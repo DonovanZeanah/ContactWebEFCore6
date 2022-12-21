@@ -10,7 +10,7 @@ namespace MyContactManagerServices
 {
   public class StatesService : IStatesService
   {
-    private IStatesRepository _statesRepository;
+    private readonly IStatesRepository _statesRepository;
 
     public StatesService(IStatesRepository statesRepository)
     {
