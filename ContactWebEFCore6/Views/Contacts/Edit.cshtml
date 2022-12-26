@@ -1,7 +1,7 @@
 ﻿@model ContactWebModels.Contact
 
 @{
-  ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit";
 }
 
 <h1>Edit</h1>
@@ -80,7 +80,5 @@
 </div>
 
 @section Scripts {
-  @{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-  }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
