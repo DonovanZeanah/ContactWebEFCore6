@@ -1,16 +1,13 @@
 ﻿using ContactWebModels;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MyContactManagerData;
 using MyContactManagerRepositories;
 using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Xunit;
 
 namespace MyContactManagerIntegrationTests
@@ -40,7 +37,6 @@ namespace MyContactManagerIntegrationTests
     private const string LAST_NAME_5 = "Davis";
     private const string EMAIL_5 = "james.davis@example.com";
     private const string FIRST_NAME_2_UPDATED = "Janet";
-
 
     public TestContactsData()
     {
@@ -90,6 +86,13 @@ namespace MyContactManagerIntegrationTests
             };
     }
 
+    /***** [Alphabetical Return Map] *******
+    0 - James Davis  --> LAST_NAME5 --> UserID 3
+    1 - Jane Smith --> LAST_NAME2 --> UserID 1
+    2 - John Smith --> LAST_NAME1 --> UserID 1
+    3 - Amanda Thomas -> First_Name 4 --> UserID 2
+    4 - Tim Thomas --> FIrst_name3 --> UserID 2
+    ******/
     private List<Contact> GetContactsTestData()
     {
       return new List<Contact>() {
@@ -112,114 +115,64 @@ namespace MyContactManagerIntegrationTests
     }
 
     [Fact]
-    public async Task TestGetAll()
+    public async Task TestGetAllContacts()
     {
       using (var context = new MyContactManagerDbContext(_options))
       {
         _repository = new ContactsRepository(context);
 
-        var contacts = await _repository.GetAllAsync();
-        contacts.Count.ShouldBe(NUMBER_OF_CONTACTS);
+        var contacts = await _repository.GetAllAsync(USERID1);
+        contacts.Count.ShouldBe(2);
+        contacts[0].FirstName.ShouldBe(FIRST_NAME_2, StringCompareShould.IgnoreCase);
+        contacts[0].LastName.ShouldBe(LAST_NAME_2, StringCompareShould.IgnoreCase);
+        contacts[0].Email.ShouldBe(EMAIL_2, StringCompareShould.IgnoreCase);
+        contacts[0].UserId.ShouldBe(USERID1, StringCompareShould.IgnoreCase);
 
-        contacts[2].FirstName.ShouldBe(FIRST_NAME_1, StringCompareShould.IgnoreCase);
-        contacts[2].LastName.ShouldBe(LAST_NAME_1, StringCompareShould.IgnoreCase);
-        contacts[2].UserId.ShouldBe(USERID1, StringCompareShould.IgnoreCase);
-        contacts[2].Email.ShouldBe(EMAIL_1, StringCompareShould.IgnoreCase);
-
-        contacts[1].FirstName.ShouldBe(FIRST_NAME_2, StringCompareShould.IgnoreCase);
-        contacts[1].LastName.ShouldBe(LAST_NAME_2, StringCompareShould.IgnoreCase);
+        contacts[1].FirstName.ShouldBe(FIRST_NAME_1, StringCompareShould.IgnoreCase);
+        contacts[1].LastName.ShouldBe(LAST_NAME_1, StringCompareShould.IgnoreCase);
+        contacts[1].Email.ShouldBe(EMAIL_1, StringCompareShould.IgnoreCase);
         contacts[1].UserId.ShouldBe(USERID1, StringCompareShould.IgnoreCase);
-        contacts[1].Email.ShouldBe(EMAIL_2, StringCompareShould.IgnoreCase);
 
-        contacts[4].FirstName.ShouldBe(FIRST_NAME_3, StringCompareShould.IgnoreCase);
-        contacts[4].LastName.ShouldBe(LAST_NAME_3, StringCompareShould.IgnoreCase);
-        contacts[4].UserId.ShouldBe(USERID2, StringCompareShould.IgnoreCase);
-        contacts[4].Email.ShouldBe(EMAIL_3, StringCompareShould.IgnoreCase);
+        contacts = await _repository.GetAllAsync(USERID2);
+        contacts.Count.ShouldBe(2);
+        contacts[0].FirstName.ShouldBe(FIRST_NAME_4, StringCompareShould.IgnoreCase);
+        contacts[0].LastName.ShouldBe(LAST_NAME_4, StringCompareShould.IgnoreCase);
+        contacts[0].Email.ShouldBe(EMAIL_4, StringCompareShould.IgnoreCase);
+        contacts[0].UserId.ShouldBe(USERID2, StringCompareShould.IgnoreCase);
 
-        contacts[3].FirstName.ShouldBe(FIRST_NAME_4, StringCompareShould.IgnoreCase);
-        contacts[3].LastName.ShouldBe(LAST_NAME_4, StringCompareShould.IgnoreCase);
-        contacts[3].UserId.ShouldBe(USERID2, StringCompareShould.IgnoreCase);
-        contacts[3].Email.ShouldBe(EMAIL_4, StringCompareShould.IgnoreCase);
+        contacts[1].FirstName.ShouldBe(FIRST_NAME_3, StringCompareShould.IgnoreCase);
+        contacts[1].LastName.ShouldBe(LAST_NAME_3, StringCompareShould.IgnoreCase);
+        contacts[1].Email.ShouldBe(EMAIL_3, StringCompareShould.IgnoreCase);
+        contacts[1].UserId.ShouldBe(USERID2, StringCompareShould.IgnoreCase);
 
+        contacts = await _repository.GetAllAsync(USERID3);
+        contacts.Count.ShouldBe(1);
         contacts[0].FirstName.ShouldBe(FIRST_NAME_5, StringCompareShould.IgnoreCase);
         contacts[0].LastName.ShouldBe(LAST_NAME_5, StringCompareShould.IgnoreCase);
-        contacts[0].UserId.ShouldBe(USERID3, StringCompareShould.IgnoreCase);
         contacts[0].Email.ShouldBe(EMAIL_5, StringCompareShould.IgnoreCase);
-
+        contacts[0].UserId.ShouldBe(USERID3, StringCompareShould.IgnoreCase);
       }
     }
-    [Theory]
-    [InlineData(1, FIRST_NAME_1, LAST_NAME_1, USERID1, EMAIL_1)]
-    [InlineData(2, FIRST_NAME_2, LAST_NAME_2, USERID1, EMAIL_2)]
-    [InlineData(3, FIRST_NAME_3, LAST_NAME_3, USERID2, EMAIL_3)]
-    [InlineData(4, FIRST_NAME_4, LAST_NAME_4, USERID2, EMAIL_4)]
-    [InlineData(5, FIRST_NAME_5, LAST_NAME_5, USERID3, EMAIL_5)]
 
-    public async Task TestGetOne(int contactId, string expectedFirstName,
-                                 string expectedLastName, string expectedUserId, string expectedEmail)
+    [Theory]
+    [InlineData(FIRST_NAME_1, LAST_NAME_1, EMAIL_1, USERID1, 1)]
+    [InlineData(FIRST_NAME_2, LAST_NAME_2, EMAIL_2, USERID1, 2)]
+    [InlineData(FIRST_NAME_3, LAST_NAME_3, EMAIL_3, USERID2, 3)]
+    [InlineData(FIRST_NAME_4, LAST_NAME_4, EMAIL_4, USERID2, 4)]
+    [InlineData(FIRST_NAME_5, LAST_NAME_5, EMAIL_5, USERID3, 5)]
+    public async Task GetContact(string firstName, string lastName, string email, string userId, int contactId)
     {
       using (var context = new MyContactManagerDbContext(_options))
       {
         _repository = new ContactsRepository(context);
 
-        var contact = await _repository.GetAsync(contactId);
-        contact.ShouldNotBe(null);
-        contact.FirstName.ShouldBe(expectedFirstName);
-        contact.LastName.ShouldBe(expectedLastName);
-        contact.UserId.ShouldBe(expectedUserId);
-        contact.Email.ShouldBe(expectedEmail);
-      }
-    }
-
-
-    [Theory]
-    [InlineData(0, "Walker", "Texas Ranger", "127498187491784", "Walker@texas.gov", "555-555-6666", "555-555-6666", 5, "66666", "Los Angeles", "666 Sixth St", "BOX 66")]
-    public async Task AddAndDeleteContact(int contactId, string expectedFirstName, string expectedLastName,
-                                          string expectedUserId, string expectedEmail, string expectedPhoneNumber,
-                                          string expectedPhoneNumber2, int expectedStateId, string expectedZip,
-                                          string expectedCity, string expectedStreetAddress1, string expectedStreetAddress2)
-    {
-      using (var context = new MyContactManagerDbContext(_options))
-      {
-        _repository = new ContactsRepository(context);
-
-        //add the state and validate it is stored
-        var contactToAdd = new Contact()
-        {
-          Id = contactId,
-          FirstName = expectedFirstName,
-          LastName = expectedLastName,
-          UserId = expectedUserId,
-          Email = expectedEmail,
-          PhonePrimary = expectedPhoneNumber,
-          PhoneSecondary = expectedPhoneNumber2,
-          StateId = expectedStateId,
-          Zip = expectedZip,
-          City = expectedCity,
-          StreetAddress1 = expectedStreetAddress1,
-          StreetAddress2 = expectedStreetAddress2
-        };
-        await _repository.AddOrUpdateAsync(contactToAdd);
-
-        var updatedContact = await _repository.GetAsync(contactToAdd.Id);
-        updatedContact.ShouldNotBeNull();
-        updatedContact.Id.ShouldBeGreaterThan(0);
-        updatedContact.FirstName.ShouldBe(expectedFirstName, StringCompareShould.IgnoreCase);
-        updatedContact.LastName.ShouldBe(expectedLastName, StringCompareShould.IgnoreCase);
-        updatedContact.UserId.ShouldBe(expectedUserId, StringCompareShould.IgnoreCase);
-        updatedContact.Email.ShouldBe(expectedEmail, StringCompareShould.IgnoreCase);
-        updatedContact.PhonePrimary.ShouldBe(expectedPhoneNumber, StringCompareShould.IgnoreCase);
-        updatedContact.StateId.ShouldBe(expectedStateId);
-        updatedContact.Zip.ShouldBe(expectedZip, StringCompareShould.IgnoreCase);
-        updatedContact.PhoneSecondary.ShouldBe(expectedPhoneNumber2, StringCompareShould.IgnoreCase);
-        updatedContact.City.ShouldBe(expectedCity, StringCompareShould.IgnoreCase);
-        updatedContact.StreetAddress1.ShouldBe(expectedStreetAddress1, StringCompareShould.IgnoreCase);
-        updatedContact.StreetAddress2.ShouldBe(expectedStreetAddress2, StringCompareShould.IgnoreCase);
-
-        //delete to keep current count and list in tact.
-        await _repository.DeleteAsync(updatedContact.Id);
-        var deletedState = await _repository.GetAsync(updatedContact.Id);
-        deletedState.ShouldBeNull();
+        var contact = await _repository.GetAsync(contactId, userId);
+        contact.ShouldNotBeNull();
+        contact.Id.ShouldBe(contactId);
+        contact.FirstName.ShouldBe(firstName, StringCompareShould.IgnoreCase);
+        contact.LastName.ShouldBe(lastName, StringCompareShould.IgnoreCase);
+        contact.Email.ShouldBe(email, StringCompareShould.IgnoreCase);
+        contact.UserId.ShouldBe(userId, StringCompareShould.IgnoreCase);
       }
     }
 
@@ -230,41 +183,63 @@ namespace MyContactManagerIntegrationTests
       {
         _repository = new ContactsRepository(context);
 
-        var contactToUpdate = await _repository.GetAsync(1); //expected IWOA -> purposeful typo
+        var contactToUpdate = await _repository.GetAsync(2, USERID1);
         contactToUpdate.ShouldNotBeNull();
-        contactToUpdate.FirstName.ShouldBe(FIRST_NAME_1, StringCompareShould.IgnoreCase);
+        contactToUpdate.FirstName.ShouldBe(FIRST_NAME_2, StringCompareShould.IgnoreCase);
 
         contactToUpdate.FirstName = FIRST_NAME_2_UPDATED;
-        await _repository.AddOrUpdateAsync(contactToUpdate);
+        await _repository.AddOrUpdateAsync(contactToUpdate, USERID1);
 
-        var updatedContact = await _repository.GetAsync(1); //expected IWOA -> purposeful typo
-        updatedContact.ShouldNotBeNull();
+        var updatedContact = await _repository.GetAsync(2, USERID1);
+        updatedContact.ShouldNotBe(null);
         updatedContact.FirstName.ShouldBe(FIRST_NAME_2_UPDATED, StringCompareShould.IgnoreCase);
 
         //put it back:
-        updatedContact.FirstName = FIRST_NAME_1;
-        await _repository.AddOrUpdateAsync(updatedContact);
+        updatedContact.FirstName = FIRST_NAME_2;
+        await _repository.AddOrUpdateAsync(updatedContact, USERID1);
 
-        var revertedContact = await _repository.GetAsync(1); //expected IWOA -> purposeful typo
-        revertedContact.ShouldNotBeNull();
-        revertedContact.FirstName.ShouldBe(FIRST_NAME_1, StringCompareShould.IgnoreCase);
+        var revertedState = await _repository.GetAsync(2, USERID1);
+        revertedState.ShouldNotBe(null);
+        revertedState.FirstName.ShouldBe(FIRST_NAME_2, StringCompareShould.IgnoreCase);
       }
     }
 
-    [Theory]
-    [InlineData(1, true)]
-    [InlineData(3, true)]
-    [InlineData(99, false)]
-    public async Task TestExists(int id, bool expected)
+    [Fact]
+    public async Task AddAndDeleteContact()
     {
       using (var context = new MyContactManagerDbContext(_options))
       {
         _repository = new ContactsRepository(context);
 
-        var exists = await _repository.ExistsAsync(id);
-        exists.ShouldBe(expected);
+        //add the contact and validate it is stored
+        var contactToAdd = new Contact()
+        {
+          Birthday = new DateTime(1971, 10, 12),
+          City = "Somewhere",
+          Email = "jlpicard@starfleet.com",
+          FirstName = "Jean-Luc",
+          LastName = "Picard",
+          PhonePrimary = "555-555-9999",
+          PhoneSecondary = "555-555-9999",
+          StateId = 4,
+          StreetAddress1 = "999 Fourth St",
+          StreetAddress2 = "UNIT 99",
+          UserId = USERID2,
+          Zip = "99999"
+        };
+
+        await _repository.AddOrUpdateAsync(contactToAdd, USERID2);
+
+        var updatedContact = await _repository.GetAsync(contactToAdd.Id, USERID2);
+        updatedContact.ShouldNotBeNull();
+        updatedContact.FirstName.ShouldBe("Jean-Luc", StringCompareShould.IgnoreCase);
+        updatedContact.Email.ShouldBe("jlpicard@starfleet.com", StringCompareShould.IgnoreCase);
+
+        //delete to keep current count and list in tact.
+        await _repository.DeleteAsync(updatedContact.Id, USERID2);
+        var deletedContact = await _repository.GetAsync(updatedContact.Id, USERID2);
+        deletedContact.ShouldBeNull();
       }
     }
-
   }
 }

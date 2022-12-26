@@ -25,9 +25,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="States" asp-action="Index">States</a>
-                        </li>
+                        @if (User?.Identity?.Name?.ToString().Length > 0)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Contacts" asp-action="Index">My Contacts</a>
+                            </li>
+                            @if (User?.IsInRole("Admin") ?? false)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="States" asp-action="Index">States</a>
+                                </li>
+                            }
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -48,7 +57,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    @*<script src="https://simplejsstor234234.blob.core.windows.net/sitescripts/simple.js?v=223423aaaa33424"></script>*@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,5 +1,4 @@
 ﻿using ContactWebModels;
-using MyContactManagerServices;
 
 namespace MyContactManagerServices
 {

@@ -1,7 +1,4 @@
-﻿
-
-using System.Collections.Generic;
-using ContactWebModels;
+﻿using ContactWebModels;
 
 namespace MyContactManagerRepositories
 {

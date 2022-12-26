@@ -1,7 +1,7 @@
 ﻿@model ContactWebModels.Contact
 
 @{
-    ViewData["Title"] = "Edit";
+  ViewData["Title"] = "Edit";
 }
 
 <h1>Edit</h1>
@@ -69,11 +69,6 @@
                 <span asp-validation-for="Zip" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -85,5 +80,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+  @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+  }
 }
