@@ -4,21 +4,100 @@ using System.Runtime.InteropServices;
 
 namespace ContactWebModels.Data
 {
-    public class UserRolesService : IUserRolesService
+  public class UserRolesService : IUserRolesService
+  {
+    private readonly UserManager<ContactWebUser> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
+    public UserRolesService(UserManager<ContactWebUser> userManager, RoleManager<IdentityRole> roleManager)
     {
-        private readonly UserManager<ContactWebUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        public UserRolesService(UserManager<ContactWebUser> userManager, RoleManager<IdentityRole> roleManager)
+      _userManager = userManager;
+      _roleManager = roleManager;
+    }
+
+    public async Task CreateRole(string roleName)
+    {
+      var existingRole = await _roleManager.FindByNameAsync(roleName);
+      if (existingRole is not null) return;
+
+      var adminRole = new IdentityRole()
+      {
+        Name = roleName,
+        NormalizedName = roleName.ToUpper()
+      };
+      await _roleManager.CreateAsync(adminRole);
+    }
+
+    public async Task CreateUser(string email, string userName, string password, string phone)
+    {
+      var existingAdminUser = await _userManager.FindByEmailAsync(userName);
+      if (existingAdminUser is not null) return;
+      
+      var user = new ContactWebUser()
+
+      {
+        Email = email,
+        EmailConfirmed = true,
+        UserName = userName,
+        NormalizedEmail = email.ToUpper(),
+        NormalizedUserName = userName.ToUpper(),
+        LockoutEnabled = false,
+        //password = extra work
+        PhoneNumber = phone
+
+      };
+
+      await _userManager.CreateAsync(user, password);
+
+      //user = await _userManager.FindByEmailAsync(email);
+      //var token = await _userManager.GetPasswordResetTokenAsync(user);
+     // var result = await _userManager.ResetPasswordAsync(user, token, password);
+    }
+
+    public async Task AssociateUserToRole(string roleName, string email)
+    {
+      var existingUser = await _userManager.FindByEmailAsync(email);
+      var existingRole = await _roleManager.FindByNameAsync(roleName);
+      if (existingUser is null || existingRole is null)
+      {
+        throw new InvalidOperationException("Cannot add null user/role combination");
+      }
+      var userRoles = await _userManager.GetRolesAsync(existingUser);
+
+      var existingUserRole = userRoles.SingleOrDefault(x => x.Equals(roleName));
+
+      if (existingUserRole is not null) return;
+      await _userManager.AddToRoleAsync(existingUser, roleName);
+      
+
+
+    }
+
+        public Task AssociateUserToRole(string roleName, ContactWebUser user)
         {
-            _userManager = userManager;
-            _roleManager = roleManager;
+            throw new NotImplementedException();
         }
 
-        public async Task CreateRole(string roleName)
+        public Task CreateUser(ContactWebUser user)
+        {
+            throw new NotImplementedException();
+        }
+
+    public const string ADMIN_ROLE_NAME = "Admin";
+    public const string ADMIN_USER_EMAIL = "dkzeanah@gmail.com";
+      public const string ADMIN_USER_PWD = "Fascinating#1!";
+        public async Task EnsureSuperUser()
+        {
+      await CreateUser(ADMIN_USER_EMAIL, ADMIN_USER_EMAIL, ADMIN_USER_PWD, "1800STRULES");
+      await CreateRole(ADMIN_ROLE_NAME);
+      await AssociateUserToRole(ADMIN_ROLE_NAME, ADMIN_USER_EMAIL);
+        }
+
+        /*
+         * public async Task CreateRole(string roleName)
         {
             var existingRole = await _roleManager.FindByNameAsync(roleName);
             if (existingRole is not null) return;
-            
+
             var adminRole = new IdentityRole()
             {
                 Name = roleName,
@@ -84,5 +163,6 @@ namespace ContactWebModels.Data
             await CreateRole(SUPERADMIN_ROLE_NAME);
             await AssociateUserToRole(SUPERADMIN_ROLE_NAME, SUPERADMIN_USER_EMAIL);
         }
+        */
     }
 }

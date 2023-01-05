@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyContactManagerData;
 
@@ -11,9 +12,10 @@ using MyContactManagerData;
 namespace MyContactManagerData.Migrations
 {
     [DbContext(typeof(MyContactManagerDbContext))]
-    partial class MyContactManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230103191912_authentication")]
+    partial class authentication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

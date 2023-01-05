@@ -24,7 +24,8 @@ namespace MyContactManagerRepositories
                       .Include(x => x.State)
                       .AsNoTracking()
                       .Where(x => x.UserId.ToUpper() == userId.ToUpper())
-                      .OrderBy(x => x.LastName).ToListAsync();
+                      .OrderBy(x => x.LastName)
+                      .ToListAsync();
       return contacts;
     }
 
