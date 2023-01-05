@@ -10,8 +10,9 @@ namespace MyContactManagerData
 
     public DbSet<State> States { get; set; }
     public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Supply> Supplys { get; set; }
 
-    public MyContactManagerDbContext()
+        public MyContactManagerDbContext()
     {
       //purposefully empty: Necessary for Scaffold 
     }

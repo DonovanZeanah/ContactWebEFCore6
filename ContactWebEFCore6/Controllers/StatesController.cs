@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace ContactWebEFCore6.Controllers
 {
   //only person that can access states are Admin User Roles
-  [Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin, SuperAdmin")]
   public class StatesController : Controller
   {
     private readonly IMemoryCache _cache;

@@ -85,12 +85,19 @@ namespace ContactWebModels.Data
     public const string ADMIN_ROLE_NAME = "Admin";
     public const string ADMIN_USER_EMAIL = "dkzeanah@gmail.com";
       public const string ADMIN_USER_PWD = "Fascinating#1!";
-        public async Task EnsureSuperUser()
+    public const string SUPERADMIN_ROLE_NAME = "SuperAdmin";
+    public const string SUPERADMIN_USER_EMAIL = "donovan.zeanah@outlook.com";
+    public const string SUPERADMIN_USER_PWD = "Blasterball8!";
+    public async Task EnsureSuperUser()
         {
       await CreateUser(ADMIN_USER_EMAIL, ADMIN_USER_EMAIL, ADMIN_USER_PWD, "1800STRULES");
       await CreateRole(ADMIN_ROLE_NAME);
       await AssociateUserToRole(ADMIN_ROLE_NAME, ADMIN_USER_EMAIL);
-        }
+
+      await CreateUser(SUPERADMIN_USER_EMAIL, SUPERADMIN_USER_EMAIL, SUPERADMIN_USER_PWD, "1800STRULES");
+      await CreateRole(SUPERADMIN_ROLE_NAME);
+      await AssociateUserToRole(SUPERADMIN_ROLE_NAME, SUPERADMIN_USER_EMAIL);
+    }
 
         /*
          * public async Task CreateRole(string roleName)
