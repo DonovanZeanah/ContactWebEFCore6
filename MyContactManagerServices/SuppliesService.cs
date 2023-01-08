@@ -17,8 +17,8 @@ namespace MyContactManagerServices
       _repository = repository;
     }
 
-  
-    
+
+
     public async Task<List<Supply>> GetAllAsync(string userId)
     {
       var data = await _repository.GetAllAsync(userId);
@@ -55,7 +55,7 @@ namespace MyContactManagerServices
       throw new NotImplementedException();
     }
   }
- }
+}
 
 
 

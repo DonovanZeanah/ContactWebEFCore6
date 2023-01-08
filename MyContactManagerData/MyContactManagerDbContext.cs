@@ -100,6 +100,23 @@ namespace MyContactManagerData
                   new State() { Id = 51, Name = "Wyoming", Abbreviation = "WY" }
               );
       });
+      modelBuilder.Entity<Category>(x =>
+      {
+        x.HasData(
+                  new Category() { Id = 1, Name = "Hardware" },
+                  new Category() { Id = 2, Name = "Consumables" },
+                  new Category() { Id = 3, Name = "RawMaterials" },
+                  new Category() { Id = 4, Name = "Hazmat" },
+                  new Category() { Id = 5, Name = "OutSourced" }
+                 
+              );
+      });
+      modelBuilder.Entity<Supply>(x =>
+      {
+        x.HasData(
+                  new Supply() { Id = 1, Name = "Screw", CategoryId = 1 }
+              );
+      });
     }
 
   }

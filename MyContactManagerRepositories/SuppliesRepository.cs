@@ -22,7 +22,7 @@ namespace MyContactManagerRepositories
     public async Task<List<Supply>> GetAllAsync(string userId)
     {
       var supplies = await _context.Supplies
-                      .Include(x => x.Id)
+                      .Include(x => x.Category)
                       .AsNoTracking()
                       .Where(x => x.UserId.ToUpper() == userId.ToUpper())
                       .OrderBy(x => x.Name)
@@ -50,15 +50,16 @@ namespace MyContactManagerRepositories
 
     private async Task GetExistingCategoryReference(Supply supply)
     {
-      Category existingCategory = await _context.Categories.SingleOrDefaultAsync(x => x.Id == supply.CategoryId);
-      if (existingCategory is not null)
+      var existingCategory = await _context.Categories.SingleOrDefaultAsync(x => x.Id == supply.CategoryId);
+     // if (existingCategory is not null)
+      if (existingCategory != null)
       {
         supply.Category = existingCategory;
       }
     }
 
 
-    private async Task<int> Insert(Supply s, string itemId)
+    private async Task<int> Insert(Supply s, string userId)
     {
       await GetExistingCategoryReference(s);
       await _context.Supplies.AddAsync(s);

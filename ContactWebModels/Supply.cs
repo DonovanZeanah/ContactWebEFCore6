@@ -7,19 +7,15 @@ namespace ContactWebModels
   {
     [Key]
     public int Id { get; set; }
-
+    [Display(Name = "Name")]
+    [Required(ErrorMessage = "Name is required")]
     public string Name { get; set; }
 
-    
+ 
     [Display(Name = "Category")]
     [Required(ErrorMessage = "A category must be assigned")]
-    [StringLength(ContactManagerConstants.MAX_CATEGORY_LENGTH)]
     public int CategoryId { get; set; }
     public virtual Category Category { get; set; }
-
-    [Display(Name = "Item Name")]
-    [Required(ErrorMessage = "A Name is required")]
-    [StringLength(ContactManagerConstants.MAX_NAME_LENGTH)]
 
     public double Price { get; set; }
     public int Quantity { get; set; }
