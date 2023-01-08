@@ -9,7 +9,7 @@ namespace MyContactManagerData
     private static IConfigurationRoot _configuration;
 
 
-    public DbSet<Supply> Categories { get; set; }
+    public DbSet<Category> Categories { get; set; }
     public DbSet<Contact> Contacts { get; set; }
 
     public DbSet<State> States { get; set; }

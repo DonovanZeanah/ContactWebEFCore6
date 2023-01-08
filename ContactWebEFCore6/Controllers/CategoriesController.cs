@@ -92,7 +92,7 @@ namespace ContactWebEFCore6.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
     {
-      if (ModelCategory.IsValid)
+      if (ModelState.IsValid)
       {
         await _categoriesService.AddOrUpdateAsync(category);
         _cache.Remove(ContactCacheConstants.ALL_CATEGORIES_DATA);
@@ -129,7 +129,7 @@ namespace ContactWebEFCore6.Controllers
         return NotFound();
       }
 
-      if (ModelCategory.IsValid)
+      if (ModelState.IsValid)
       {
         try
         {
