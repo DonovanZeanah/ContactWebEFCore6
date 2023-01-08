@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\CategorysController.cs" />
+    <Compile Remove="Controllers\SupplysController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Views\Contacts\Create.cshtml" />
     <None Include="Views\Contacts\Delete.cshtml" />
     <None Include="Views\Contacts\Details.cshtml" />
@@ -40,6 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ContactWebModels\ContactWebModels.csproj" />
     <ProjectReference Include="..\MyContactManagerServices\MyContactManagerServices.csproj" />
   </ItemGroup>
 
