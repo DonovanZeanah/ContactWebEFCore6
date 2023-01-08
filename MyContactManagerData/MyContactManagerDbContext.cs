@@ -8,8 +8,14 @@ namespace MyContactManagerData
   {
     private static IConfigurationRoot _configuration;
 
-    public DbSet<State> States { get; set; }
+
+    public DbSet<Category> Categories { get; set; }
     public DbSet<Contact> Contacts { get; set; }
+
+    public DbSet<State> States { get; set; }
+    public DbSet<Supply> Supplies { get; set; }
+    
+    //
 
     public MyContactManagerDbContext()
     {
@@ -92,6 +98,23 @@ namespace MyContactManagerData
                   new State() { Id = 49, Name = "West Virginia", Abbreviation = "WV" },
                   new State() { Id = 50, Name = "Wisconsin", Abbreviation = "WI" },
                   new State() { Id = 51, Name = "Wyoming", Abbreviation = "WY" }
+              );
+      });
+      modelBuilder.Entity<Category>(x =>
+      {
+        x.HasData(
+                  new Category() { Id = 1, Name = "Hardware" },
+                  new Category() { Id = 2, Name = "Consumables" },
+                  new Category() { Id = 3, Name = "RawMaterials" },
+                  new Category() { Id = 4, Name = "Hazmat" },
+                  new Category() { Id = 5, Name = "OutSourced" }
+                 
+              );
+      });
+      modelBuilder.Entity<Supply>(x =>
+      {
+        x.HasData(
+                  new Supply() { Id = 1, Name = "Screw", CategoryId = 1 }
               );
       });
     }

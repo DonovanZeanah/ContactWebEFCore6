@@ -9,13 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactWebModels", "Contact
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyContactManagerData", "MyContactManagerData\MyContactManagerData.csproj", "{CB246CDA-C99C-448E-9B0D-805AF669BEB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyContactManagerRepositories", "MyContactManagerRepositories\MyContactManagerRepositories.csproj", "{9748CD62-3A14-4FFB-B2B3-945E9BD7BDED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyContactManagerRepositories", "MyContactManagerRepositories\MyContactManagerRepositories.csproj", "{9748CD62-3A14-4FFB-B2B3-945E9BD7BDED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyContactManagerIntegrationTest", "MyContactManagerIntegrationTest\MyContactManagerIntegrationTest.csproj", "{4D87BE26-05B2-4167-9066-6F154DF91B16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyContactManagerIntegrationTest", "MyContactManagerIntegrationTest\MyContactManagerIntegrationTest.csproj", "{4D87BE26-05B2-4167-9066-6F154DF91B16}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyContactManagerServices", "MyContactManagerServices\MyContactManagerServices.csproj", "{08C65D42-D8F3-41A0-A002-6C534719A117}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyContactManagerUnitTests", "MyContactManagerUnitTests\MyContactManagerUnitTests.csproj", "{81921585-FDDB-4618-80FD-E53D1986689A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyContactManagerUnitTests", "MyContactManagerUnitTests\MyContactManagerUnitTests.csproj", "{81921585-FDDB-4618-80FD-E53D1986689A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{6B8B8682-7897-4778-9C5A-EAFC607DCA09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4D87BE26-05B2-4167-9066-6F154DF91B16} = {6B8B8682-7897-4778-9C5A-EAFC607DCA09}
+		{81921585-FDDB-4618-80FD-E53D1986689A} = {6B8B8682-7897-4778-9C5A-EAFC607DCA09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {514EB0F8-4333-476D-B5CC-3DFB23CDAFEF}
