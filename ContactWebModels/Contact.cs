@@ -60,8 +60,14 @@ namespace ContactWebModels
     [Display(Name = "Zip Code")]
     [StringLength(ContactManagerConstants.MAX_ZIP_CODE_LENGTH, MinimumLength = ContactManagerConstants.MIN_ZIP_CODE_LENGTH)]
     [RegularExpression("(^\\d{5}(-\\d{4})?$)|(^[ABCEGHJKLMNPRSTVXY]{1}\\d{1}[A-Z]{1} *\\d{1}[A-Z]{1}\\d{1}$)", ErrorMessage = "Zip code is invalid.")] // US or Canada
+
+
+    
     public string Zip { get; set; }
-    /* https://stackoverflow.com/questions/16675176/asp-net-mvc-4-zip-code-validation */
+    
+    /*
+     * https://stackoverflow.com/questions/16675176/asp-net-mvc-4-zip-code-validation 
+     */
 
     [Required(ErrorMessage = "The User ID is required in order to map the contact to a user correctly")]
     public string UserId { get; set; }
