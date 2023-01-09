@@ -7,52 +7,11 @@
     <UserSecretsId>aspnet-ContactWebEFCore6-0090AE31-94A8-496D-A320-A47AC4A04536</UserSecretsId>
   </PropertyGroup>
 
+  
+
   <ItemGroup>
     <Compile Remove="Controllers\CategorysController.cs" />
     <Compile Remove="Controllers\SupplysController.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Views\Categories\Create.cshtml" />
-    <Content Remove="Views\Categories\Delete.cshtml" />
-    <Content Remove="Views\Categories\Details.cshtml" />
-    <Content Remove="Views\Categories\Edit.cshtml" />
-    <Content Remove="Views\Categories\Index.cshtml" />
-    <Content Remove="Views\Supplies\Create.cshtml" />
-    <Content Remove="Views\Supplies\Delete.cshtml" />
-    <Content Remove="Views\Supplies\Details.cshtml" />
-    <Content Remove="Views\Supplies\Edit.cshtml" />
-    <Content Remove="Views\Supplies\Index.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Categories\Create.cshtml" />
-    <None Include="Views\Categories\Delete.cshtml" />
-    <None Include="Views\Categories\Details.cshtml" />
-    <None Include="Views\Categories\Edit.cshtml" />
-    <None Include="Views\Categories\Index.cshtml" />
-    <None Include="Views\Contacts\Create.cshtml" />
-    <None Include="Views\Contacts\Delete.cshtml" />
-    <None Include="Views\Contacts\Details.cshtml" />
-    <None Include="Views\Contacts\Edit.cshtml" />
-    <None Include="Views\Contacts\Index.cshtml" />
-    <None Include="Views\Home\Index.cshtml" />
-    <None Include="Views\Home\Privacy.cshtml" />
-    <None Include="Views\Shared\Error.cshtml" />
-    <None Include="Views\Shared\_Layout.cshtml" />
-    <None Include="Views\Shared\_LoginPartial.cshtml" />
-    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
-    <None Include="Views\States\Create.cshtml" />
-    <None Include="Views\States\Delete.cshtml" />
-    <None Include="Views\States\Details.cshtml" />
-    <None Include="Views\States\Edit.cshtml" />
-    <None Include="Views\States\Index.cshtml" />
-    <None Include="Views\Supplies\Create.cshtml" />
-    <None Include="Views\Supplies\Delete.cshtml" />
-    <None Include="Views\Supplies\Details.cshtml" />
-    <None Include="Views\Supplies\Edit.cshtml" />
-    <None Include="Views\Supplies\Index.cshtml" />
-    <None Include="Views\UserAdmin\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -75,7 +34,7 @@
     <Folder Include="Controllers\" />
     <Folder Include="Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Shared\" />
+    <Folder Include="Views\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
