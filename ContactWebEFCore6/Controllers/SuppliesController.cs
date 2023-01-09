@@ -84,7 +84,7 @@ namespace SupplyWebEFCore6.Controllers
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,CategoryId")] Supply supply)
+    public async Task<IActionResult> Create([Bind("Id,Name,Price,Quantity,CategoryId")] Supply supply)
     {
       var userId = await GetCurrentUserId();
       supply.UserId = userId;

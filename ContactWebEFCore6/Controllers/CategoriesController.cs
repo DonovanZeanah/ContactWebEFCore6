@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ContactWebEFCore6.Controllers
 {
-  //[Authorize(Roles = "Admin, SuperAdmin")]
+  [Authorize(Roles = "Admin, SuperAdmin")]
 
   public class CategoriesController : Controller
     {
