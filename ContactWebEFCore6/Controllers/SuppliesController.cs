@@ -18,6 +18,7 @@ namespace SupplyWebEFCore6.Controllers
     {
     private readonly ISuppliesService _suppliesService;
     private readonly ICategoriesService _categoriesService;
+    
     private static List<Category> _allCategories;
     private static SelectList _categoriesData;
 

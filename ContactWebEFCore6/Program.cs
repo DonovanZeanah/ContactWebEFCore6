@@ -15,6 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Add Contact Web DB Connection                             
 var mcmdContext = builder.Configuration.GetConnectionString("ContactWebDbConnection");
+
 builder.Services.AddDbContext<MyContactManagerDbContext>(options =>
     options.UseSqlServer(mcmdContext));
 
@@ -38,6 +39,7 @@ builder.Services.AddDefaultIdentity<ContactWebUser>(options => options.SignIn.Re
     .AddDefaultUI()
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache();
@@ -49,18 +51,26 @@ builder.Services.AddSession(options =>
   options.Cookie.IsEssential = true;
 });
 
-builder.Services.AddScoped<IStatesService, StatesService>();
-builder.Services.AddScoped<IStatesRepository, StatesRepository>();
-builder.Services.AddScoped<IContactsService, ContactsService>();
-builder.Services.AddScoped<IContactsRepository, ContactsRepository>();
-
-builder.Services.AddScoped<ICategoriesService, CategoriesService>();
-builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
-builder.Services.AddScoped<ISuppliesService, SuppliesService>();
-builder.Services.AddScoped<ISuppliesRepository, SuppliesRepository>();
-
-
 builder.Services.AddScoped<IUserRolesService, UserRolesService>();
+
+builder.Services.AddScoped<IStatesRepository, StatesRepository>();
+builder.Services.AddScoped<IStatesService, StatesService>();
+
+
+builder.Services.AddScoped<IContactsRepository, ContactsRepository>();
+builder.Services.AddScoped<IContactsService, ContactsService>();
+
+
+builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+
+
+builder.Services.AddScoped<ISuppliesRepository, SuppliesRepository>();
+builder.Services.AddScoped<ISuppliesService, SuppliesService>();
+
+
+
+
 
 var app = builder.Build();
 
