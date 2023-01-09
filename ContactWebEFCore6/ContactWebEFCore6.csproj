@@ -13,6 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Supplies\Create.cshtml" />
+    <Content Remove="Views\Supplies\Delete.cshtml" />
+    <Content Remove="Views\Supplies\Details.cshtml" />
+    <Content Remove="Views\Supplies\Edit.cshtml" />
+    <Content Remove="Views\Supplies\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Views\Contacts\Create.cshtml" />
     <None Include="Views\Contacts\Delete.cshtml" />
     <None Include="Views\Contacts\Details.cshtml" />
@@ -29,6 +37,11 @@
     <None Include="Views\States\Details.cshtml" />
     <None Include="Views\States\Edit.cshtml" />
     <None Include="Views\States\Index.cshtml" />
+    <None Include="Views\Supplies\Create.cshtml" />
+    <None Include="Views\Supplies\Delete.cshtml" />
+    <None Include="Views\Supplies\Details.cshtml" />
+    <None Include="Views\Supplies\Edit.cshtml" />
+    <None Include="Views\Supplies\Index.cshtml" />
     <None Include="Views\UserAdmin\Index.cshtml" />
   </ItemGroup>
 
@@ -47,6 +60,23 @@
   <ItemGroup>
     <ProjectReference Include="..\ContactWebModels\ContactWebModels.csproj" />
     <ProjectReference Include="..\MyContactManagerServices\MyContactManagerServices.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\Shared\" />
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\lib\bootstrap\" />
+    <Folder Include="wwwroot\lib\bootstrap\dist\js\" />
+    <Folder Include="wwwroot\lib\jquery-validation-unobtrusive\" />
+    <Folder Include="wwwroot\lib\jquery-validation\" />
+    <Folder Include="wwwroot\lib\jquery-validation\dist\" />
+    <Folder Include="wwwroot\lib\jquery\" />
+    <Folder Include="wwwroot\lib\jquery\dist\" />
   </ItemGroup>
 
 </Project>

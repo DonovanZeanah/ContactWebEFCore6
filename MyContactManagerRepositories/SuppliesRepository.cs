@@ -107,11 +107,13 @@ namespace MyContactManagerRepositories
     public async Task<bool> isStockLow(int id, string userId)
     {
       var existingSupply = await _context.Supplies.SingleOrDefaultAsync(x => x.Id == id && x.UserId == userId);
-      if (existingSupply.Quantity < 10)
+      switch (existingSupply.Quantity)
       {
-        return true;
+        case < 10:
+          return true;
+        default:
+          return false;
       }
-      return false;
 
     }
 

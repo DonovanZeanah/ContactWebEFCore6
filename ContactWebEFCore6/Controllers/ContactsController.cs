@@ -88,7 +88,7 @@ namespace ContactWebEFCore6.Controllers
     {
       var userId = await GetCurrentUserId();
       contact.UserId = userId;
-      UpdateStateAndResetModelState(contact);
+      await UpdateStateAndResetModelState(contact);
       if (ModelState.IsValid)
       {
         await _contactsService.AddOrUpdateAsync(contact, await GetCurrentUserId());
@@ -131,7 +131,7 @@ namespace ContactWebEFCore6.Controllers
       }
       var userId = await GetCurrentUserId();
       contact.UserId = userId;
-      UpdateStateAndResetModelState(contact);
+      await UpdateStateAndResetModelState(contact);
       if (ModelState.IsValid)
       {
         try

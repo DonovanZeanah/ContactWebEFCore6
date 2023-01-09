@@ -26,7 +26,7 @@ namespace SupplyWebEFCore6.Controllers
       _suppliesService = suppliesService;
       _categoriesService = categoriesService;
       _allCategories = Task.Run(async () => await _categoriesService.GetAllAsync()).Result;
-      _categoriesData = new SelectList(_allCategories, "Id", "Name");
+      _categoriesData = new SelectList(_allCategories, "Name");
       _categoriesService = categoriesService;
     }
 
@@ -87,7 +87,7 @@ namespace SupplyWebEFCore6.Controllers
     {
       var userId = await GetCurrentUserId();
       supply.UserId = userId;
-      UpdateCategoriesAndResetModelCategories(supply);
+      await UpdateCategoriesAndResetModelCategories(supply);
       if (ModelState.IsValid)
       {
         await _suppliesService.AddOrUpdateAsync(supply, await GetCurrentUserId());
@@ -130,7 +130,7 @@ namespace SupplyWebEFCore6.Controllers
       }
       var userId = await GetCurrentUserId();
       supply.UserId = userId;
-      UpdateCategoriesAndResetModelCategories(supply);
+      await UpdateCategoriesAndResetModelCategories(supply);
       if (ModelState.IsValid)
       {
         try

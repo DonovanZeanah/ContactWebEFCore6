@@ -18,34 +18,65 @@ namespace MyContactManagerRepositories
       _context = context;
     }
 
-    public Task<int> AddOrUpdateAsync(Category category)
+    public async Task<List<Category>> GetAllAsync()
     {
-      throw new NotImplementedException();
+      var allCategoriesData = await _context.Categories.AsNoTracking().OrderBy(x => x.Name).ToListAsync();
+      return allCategoriesData;
     }
 
-    public Task<int> DeleteAsync(int id)
+    public async Task<Category> GetAsync(int id)
     {
-      throw new NotImplementedException();
+      var category = await _context.Categories.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+      return category;
     }
 
-    public Task<int> DeleteAsync(Category category)
+    public async Task<int> AddOrUpdateAsync(Category category)
     {
-      throw new NotImplementedException();
+      if (category.Id > 0)
+      {
+        return await UpdateAsync(category);
+      }
+      return await InsertAsync(category);
+    }
+    
+    private async Task<int> UpdateAsync(Category category)
+    {
+      var existingCategory = await _context.Categories.SingleOrDefaultAsync(x => x.Id == category.Id);
+      if (existingCategory is null) throw new Exception("Category not found");
+
+      existingCategory.Name = category.Name;
+
+      await _context.SaveChangesAsync();
+      return category.Id;
     }
 
-    public Task<bool> ExistsAsync(int id)
+    private async Task<int> InsertAsync(Category category)
     {
-      throw new NotImplementedException();
+      await _context.Categories.AddAsync(category);
+      await _context.SaveChangesAsync();
+      return category.Id;
     }
 
-    public Task<List<Category>> GetAllAsync()
+    public async Task<int> DeleteAsync(int id)
     {
-      throw new NotImplementedException();
+      var existingCategory = await _context.Categories.SingleOrDefaultAsync(x => x.Id == id);
+      if (existingCategory is null) throw new Exception("Could not delete category due to unable to find matching category");
+
+      _context.Categories.Remove(existingCategory);
+      await _context.SaveChangesAsync();
+      return id;
     }
 
-    public Task<Category> GetAsync(int id)
+    public async Task<int> DeleteAsync(Category category)
     {
-      throw new NotImplementedException();
+      return await DeleteAsync(category.Id);
     }
-  }
+
+    public async Task<bool> ExistsAsync(int id)
+    {
+      return await _context.Categories.AsNoTracking().AnyAsync(x => x.Id == id);
+    }
+
+
+    }
 }

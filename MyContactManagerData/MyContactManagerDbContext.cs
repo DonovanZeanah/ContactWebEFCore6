@@ -111,12 +111,6 @@ namespace MyContactManagerData
                  
               );
       });
-      modelBuilder.Entity<Supply>(x =>
-      {
-        x.HasData(
-                  new Supply() { Id = 1, Name = "Screw", CategoryId = 1 }
-              );
-      });
     }
 
   }

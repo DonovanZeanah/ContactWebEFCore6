@@ -20,33 +20,33 @@ namespace MyContactManagerRepositories
 
     public async Task<List<State>> GetAllAsync()
     {
-      var states = await _context.States.AsNoTracking().OrderBy(x => x.Name).ToListAsync();
-      return states;
+      var allStatesData = await _context.States.AsNoTracking().OrderBy(x => x.Name).ToListAsync();
+      return allStatesData;
     }
 
     public async Task<State> GetAsync(int id)
     {
-      var states = await _context.States.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
-      return states;
+      var state = await _context.States.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
+      return state;
     }
 
     public async Task<int> AddOrUpdateAsync(State state)
     {
       if (state.Id > 0)
       {
-        return await Update(state);
+        return await UpdateAsync(state);
       }
-      return await Insert(state);
+      return await InsertAsync(state);
     }
 
-    private async Task<int> Insert(State state)
+    private async Task<int> InsertAsync(State state)
     {
       await _context.States.AddAsync(state);
       await _context.SaveChangesAsync();
       return state.Id;
     }
 
-    private async Task<int> Update(State state)
+    private async Task<int> UpdateAsync(State state)
     {
       var existingState = await _context.States.SingleOrDefaultAsync(x => x.Id == state.Id);
       if (existingState is null) throw new Exception("State not found");

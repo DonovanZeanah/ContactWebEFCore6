@@ -53,6 +53,13 @@ builder.Services.AddScoped<IStatesService, StatesService>();
 builder.Services.AddScoped<IStatesRepository, StatesRepository>();
 builder.Services.AddScoped<IContactsService, ContactsService>();
 builder.Services.AddScoped<IContactsRepository, ContactsRepository>();
+
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+builder.Services.AddScoped<ISuppliesService, SuppliesService>();
+builder.Services.AddScoped<ISuppliesRepository, SuppliesRepository>();
+
+
 builder.Services.AddScoped<IUserRolesService, UserRolesService>();
 
 var app = builder.Build();
