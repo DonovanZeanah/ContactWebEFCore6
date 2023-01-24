@@ -12,8 +12,8 @@ using MyContactManagerData;
 namespace MyContactManagerData.Migrations
 {
     [DbContext(typeof(MyContactManagerDbContext))]
-    [Migration("20230109063421_AddedModels3")]
-    partial class AddedModels3
+    [Migration("20230124080436_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -142,6 +142,33 @@ namespace MyContactManagerData.Migrations
                     b.HasIndex("SupplyId");
 
                     b.ToTable("Contacts");
+                });
+
+            modelBuilder.Entity("ContactWebModels.Source", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ContactId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SupplyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("SupplyId");
+
+                    b.ToTable("Source");
                 });
 
             modelBuilder.Entity("ContactWebModels.State", b =>
@@ -525,10 +552,29 @@ namespace MyContactManagerData.Migrations
                     b.Navigation("State");
                 });
 
+            modelBuilder.Entity("ContactWebModels.Source", b =>
+                {
+                    b.HasOne("ContactWebModels.Contact", "Contact")
+                        .WithMany("Sources")
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ContactWebModels.Supply", "Supply")
+                        .WithMany("Sources")
+                        .HasForeignKey("SupplyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contact");
+
+                    b.Navigation("Supply");
+                });
+
             modelBuilder.Entity("ContactWebModels.Supply", b =>
                 {
                     b.HasOne("ContactWebModels.Category", "Category")
-                        .WithMany()
+                        .WithMany("Supplies")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -536,9 +582,21 @@ namespace MyContactManagerData.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("ContactWebModels.Category", b =>
+                {
+                    b.Navigation("Supplies");
+                });
+
+            modelBuilder.Entity("ContactWebModels.Contact", b =>
+                {
+                    b.Navigation("Sources");
+                });
+
             modelBuilder.Entity("ContactWebModels.Supply", b =>
                 {
                     b.Navigation("Contact");
+
+                    b.Navigation("Sources");
                 });
 #pragma warning restore 612, 618
         }

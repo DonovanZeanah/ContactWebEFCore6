@@ -80,6 +80,7 @@ namespace ContactWebModels
                                             string.IsNullOrWhiteSpace(StreetAddress2)
                                                 ? $"{StreetAddress1}, {City}, {State.Abbreviation}, {Zip}"
                                                 : $"{StreetAddress1} - {StreetAddress2}, {City}, {State.Abbreviation}, {Zip}";
+    public ICollection<Source> Sources { get; set; }
 
   }
 }

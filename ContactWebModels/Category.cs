@@ -17,7 +17,8 @@ namespace ContactWebModels
     [Required(ErrorMessage = "Name of category is required")]
     [StringLength(ContactManagerConstants.MAX_CATEGORY_NAME_LENGTH)]
     public string Name { get; set; }
+    public ICollection<Supply> Supplies { get; set; }
 
-    
+
   }
 }
