@@ -89,13 +89,14 @@ namespace SupplyWebEFCore6.Controllers
       var userId = await GetCurrentUserId();
       supply.UserId = userId;
       await UpdateCategoriesAndResetModelCategories(supply);
+      ModelState["Contact"].Errors.Clear();
       if (ModelState.IsValid)
       {
         await _suppliesService.AddOrUpdateAsync(supply, await GetCurrentUserId());
         return RedirectToAction(nameof(Index));
       }
       //ViewData["CategoriesId"] = new SelectList(_context.Categories, "Id", "Abbreviation", supply.CategoriesId);
-      ViewData["CategoryId"] = _categoriesData;
+      ViewData["Category"] = _categoriesData;
       return View(supply);
     }
 

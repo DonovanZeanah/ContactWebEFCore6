@@ -14,7 +14,7 @@ namespace ContactWebModels
     [Required]
     public string UserId { get; set; }
     public int SupplyId { get; set; }
-    public int ContactId { get; set; }
+    public int? ContactId { get; set; }
     public virtual Supply? Supply { get; set; }
     public virtual Contact? Contact { get; set; }
 
