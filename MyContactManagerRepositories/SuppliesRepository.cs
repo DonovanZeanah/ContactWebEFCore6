@@ -76,7 +76,8 @@ namespace MyContactManagerRepositories
       existing.CategoryId = s.CategoryId;
       existing.Price = s.Price;
       existing.Quantity = s.Quantity;
-      existing.ContactId = s.ContactId;
+      existing.Sources = s.Sources;
+      //existing.Sources = s.Sources;
 
       //existing.
       //existing.UserId = c.UserId;

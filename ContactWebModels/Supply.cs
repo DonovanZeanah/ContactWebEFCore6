@@ -20,9 +20,10 @@ namespace ContactWebModels
     public double Price { get; set; }
     public int Quantity { get; set; }
 
-    public int ContactId { get; set; }
+    // public int ContactId { get; set; }
 
-    public virtual List<Contact> Contact { get; set; }
+    //public virtual List<Contact> Contact { get; set; }
+    public virtual ICollection<Source> Sources { get; set; }
     
     [Required(ErrorMessage = "The User ID is required in order to map the contact to a user correctly")]
     public string UserId { get; set; }
