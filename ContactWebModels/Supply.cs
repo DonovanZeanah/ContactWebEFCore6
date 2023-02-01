@@ -22,11 +22,12 @@ namespace ContactWebModels
     [Display(Name = "Contact")]
     public int? ContactId { get; set; }
 
-    public virtual List<Contact> Contact { get; set; }
+    // public int ContactId { get; set; }
 
-    //[Required(ErrorMessage = "The User ID is required in order to map the contact to a user correctly")]
-    public string? UserId { get; set; }
-
-    public ICollection<Source>? Sources { get; set; }
+    //public virtual List<Contact> Contact { get; set; }
+    public virtual ICollection<Source> Sources { get; set; }
+    
+    [Required(ErrorMessage = "The User ID is required in order to map the contact to a user correctly")]
+    public string UserId { get; set; }
   }
 }

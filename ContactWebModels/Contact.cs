@@ -82,5 +82,7 @@ namespace ContactWebModels
                                                 : $"{StreetAddress1} - {StreetAddress2}, {City}, {State.Abbreviation}, {Zip}";
     public ICollection<Source> Sources { get; set; }
 
+    public virtual ICollection<Source> Sources { get; set; }
+
   }
 }
