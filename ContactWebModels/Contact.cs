@@ -86,5 +86,7 @@ namespace ContactWebModels
 
     public virtual ICollection<Source> Sources { get; set; }
 
+    public virtual ICollection<Source> Sources { get; set; }
+
   }
 }
