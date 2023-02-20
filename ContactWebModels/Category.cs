@@ -18,7 +18,15 @@ namespace ContactWebModels
     [StringLength(ContactManagerConstants.MAX_CATEGORY_NAME_LENGTH)]
     public string Name { get; set; }
     public ICollection<Supply> Supplies { get; set; }
+    public ICollection<Source> Sources { get; set; }
 
 
+    public override string ToString()
+    {
+      return "Category: " + Name;
+    }
+    
+
+    
   }
 }

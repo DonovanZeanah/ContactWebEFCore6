@@ -1,7 +1,8 @@
 using ContactWebModels;
 using Moq;
-using MyContactManagerRepositories;
+using MyContactManagerRepositories.interfaces;
 using MyContactManagerServices;
+using MyContactManagerServices.interfaces;
 using Shouldly;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using Xunit;
 
 namespace MyContactManagerUnitTests
 {
-  public class TestStatesService
+    public class TestStatesService
   {
     private IStatesService _statesService;
     private Mock<IStatesRepository> _repository;

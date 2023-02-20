@@ -1,6 +1,7 @@
 ﻿using ContactWebModels;
 using Microsoft.EntityFrameworkCore;
 using MyContactManagerData;
+using MyContactManagerRepositories.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MyContactManagerRepositories
 {
-  public class SuppliesRepository : ISuppliesRepository
+    public class SuppliesRepository : ISuppliesRepository
   {
     private readonly MyContactManagerDbContext _context;
     //private object itemId;
@@ -48,13 +49,30 @@ namespace MyContactManagerRepositories
       return await Insert(s, userId);
     }
 
-    private async Task GetExistingCategoryReference(Supply supply)
+    /*private async Task GetExistingCategoryReference(Supply supply)
     {
-      var existingCategory = await _context.Categories.SingleOrDefaultAsync(x => x.Id == supply.CategoryId);
-     // if (existingCategory is not null)
+      Supply existingCategory = await _context.Supplies.Include(s => s.Category).FirstOrDefaultAsync(s => s.Id == supply.Category.Id);
+      //var existingCategory = await _context.Categories.SingleOrDefaultAsync(x => x.Id == supply.CategoryId);
+
+      // if (existingCategory is not null)
       if (existingCategory != null)
       {
         supply.Category = existingCategory;
+      }
+    }*/
+    private async Task GetExistingCategoryReference(Supply supply)
+    {
+      // Check if the supply object has a category reference
+      if (supply.Category != null)
+      {
+        // Find the existing category by its Id
+        Category existingCategory = await _context.Categories.FindAsync(supply.Category.Id);
+
+        // If the category is found, update the reference in the supply object
+        if (existingCategory != null)
+        {
+          supply.Category = existingCategory;
+        }
       }
     }
 
@@ -69,14 +87,25 @@ namespace MyContactManagerRepositories
 
     private async Task<int> Update(Supply s, string userId)
     {
-      var existing = await _context.Supplies.SingleOrDefaultAsync(x => x.Id == s.Id && x.UserId == userId);
+      var existing = await _context.Supplies
+        .Include(x => x.Categories)
+        .SingleOrDefaultAsync(x => x.Id == s.Id && x.UserId == userId);
       if (existing is null) throw new Exception("Supply not found");
 
       existing.Name = s.Name;
-      existing.CategoryId = s.CategoryId;
       existing.Price = s.Price;
       existing.Quantity = s.Quantity;
       existing.Sources = s.Sources;
+
+      existing.Categories.Clear();
+
+      foreach (var category in s.Categories)
+      {         var existingCategory = await _context.Categories.FindAsync(category.Id);
+             if (existingCategory is not null)
+        {
+          existing.Categories.Add(existingCategory);
+        }
+      }
       //existing.Sources = s.Sources;
 
       //existing.

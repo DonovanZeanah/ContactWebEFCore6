@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\CategorysController.cs" />
+    <Compile Remove="Controllers\PupilController.cs" />
     <Compile Remove="Controllers\SupplysController.cs" />
   </ItemGroup>
 
@@ -31,10 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Data\" />
+    <Folder Include="Migrations\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />

@@ -10,13 +10,13 @@ using MyContactManagerData;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Caching.Memory;
 using ContactWebEFCore6.Models;
-using MyContactManagerServices;
 using Microsoft.AspNetCore.Authorization;
+using MyContactManagerServices.interfaces;
 
 namespace ContactWebEFCore6.Controllers
 {
-  //only person that can access states are Admin User Roles
-  [Authorize(Roles = "Admin, SuperAdmin")]
+    //only person that can access states are Admin User Roles
+    [Authorize(Roles = "Admin, SuperAdmin")]
   public class StatesController : Controller
   {
     private readonly IMemoryCache _cache;

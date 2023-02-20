@@ -1,6 +1,8 @@
 ﻿using ContactWebModels;
 using Microsoft.EntityFrameworkCore;
 using MyContactManagerRepositories;
+using MyContactManagerRepositories.interfaces;
+using MyContactManagerServices.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MyContactManagerServices
 {
-  public class SuppliesService : ISuppliesService
+    public class SuppliesService : ISuppliesService
   {
     private ISuppliesRepository _repository;
     public SuppliesService(ISuppliesRepository repository)

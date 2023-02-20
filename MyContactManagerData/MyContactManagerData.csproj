@@ -35,5 +35,9 @@
   <ItemGroup>
     <ProjectReference Include="..\ContactWebModels\ContactWebModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
   
 </Project>

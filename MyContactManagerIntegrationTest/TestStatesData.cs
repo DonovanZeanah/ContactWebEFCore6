@@ -2,6 +2,7 @@ using ContactWebModels;
 using Microsoft.EntityFrameworkCore;
 using MyContactManagerData;
 using MyContactManagerRepositories;
+using MyContactManagerRepositories.interfaces;
 using Shouldly;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using Xunit;
 
 namespace MyContactManagerIntegrationTests
 {
-  public class TestStatesData
+    public class TestStatesData
   {
     DbContextOptions<MyContactManagerDbContext> _options;
     private IStatesRepository _repository;

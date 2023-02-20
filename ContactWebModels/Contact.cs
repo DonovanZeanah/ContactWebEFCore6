@@ -13,24 +13,24 @@ namespace ContactWebModels
     public string FirstName { get; set; }
 
     [Display(Name = "Last Name")]
-    [Required(ErrorMessage = "Last Name is required")]
+    //[Required(ErrorMessage = "Last Name is required")]
     [StringLength(ContactManagerConstants.MAX_LAST_NAME_LENGTH)]
     public string LastName { get; set; }
 
     [Display(Name = "Email Address")]
-    [Required(ErrorMessage = "Email Address is required")]
+    //[Required(ErrorMessage = "Email Address is required")]
     [StringLength(ContactManagerConstants.MAX_EMAIL_LENGTH)]
     [EmailAddress(ErrorMessage = "Invalid Email Address")]
     public string Email { get; set; }
 
     [Display(Name = "Mobile Phone")]
-    [Required(ErrorMessage = "Phone number is required")]
+    //[Required(ErrorMessage = "Phone number is required")]
     [StringLength(ContactManagerConstants.MAX_PHONE_LENGTH)]
     [Phone(ErrorMessage = "Invalid Phone Number")]
     public string PhonePrimary { get; set; }
 
     [Display(Name = "Home/Office Phone")]
-    [Required(ErrorMessage = "Phone number is required")]
+    //[Required(ErrorMessage = "Phone number is required")]
     [StringLength(ContactManagerConstants.MAX_PHONE_LENGTH)]
     [Phone(ErrorMessage = "Invalid Phone Number")]
     public string PhoneSecondary { get; set; }
@@ -46,7 +46,7 @@ namespace ContactWebModels
     [StringLength(ContactManagerConstants.MAX_STREET_ADDRESS_LENGTH)]
     public string StreetAddress2 { get; set; }
 
-    [Required(ErrorMessage = "City is required")]
+    //[Required(ErrorMessage = "City is required")]
     [StringLength(ContactManagerConstants.MAX_CITY_LENGTH)]
     public string City { get; set; }
 
@@ -56,15 +56,15 @@ namespace ContactWebModels
 
     public virtual State State { get; set; }
 
-    [Required(ErrorMessage = "Zip Code is required")]
+    //[Required(ErrorMessage = "Zip Code is required")]
     [Display(Name = "Zip Code")]
     [StringLength(ContactManagerConstants.MAX_ZIP_CODE_LENGTH, MinimumLength = ContactManagerConstants.MIN_ZIP_CODE_LENGTH)]
     [RegularExpression("(^\\d{5}(-\\d{4})?$)|(^[ABCEGHJKLMNPRSTVXY]{1}\\d{1}[A-Z]{1} *\\d{1}[A-Z]{1}\\d{1}$)", ErrorMessage = "Zip code is invalid.")] // US or Canada
 
 
-    
+
     public string Zip { get; set; }
-    
+
     /*
      * https://stackoverflow.com/questions/16675176/asp-net-mvc-4-zip-code-validation 
      */
@@ -80,13 +80,12 @@ namespace ContactWebModels
                                             string.IsNullOrWhiteSpace(StreetAddress2)
                                                 ? $"{StreetAddress1}, {City}, {State.Abbreviation}, {Zip}"
                                                 : $"{StreetAddress1} - {StreetAddress2}, {City}, {State.Abbreviation}, {Zip}";
-    public ICollection<Source> Sources { get; set; }
+    //public ICollection<Source> Sources { get; set; }
 
-    public virtual ICollection<Source> Sources { get; set; }
+    //public virtual ICollection<Source>? Sources { get; set; }
+    public int SourceId { get; set; }
 
-    public virtual ICollection<Source> Sources { get; set; }
-
-    public virtual ICollection<Source> Sources { get; set; }
+    public virtual ICollection<Source>? Sources { get; set; }
 
   }
 }

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContactWebModels;
-using MyContactManagerRepositories;
+using MyContactManagerRepositories.interfaces;
+using MyContactManagerServices.interfaces;
 
 namespace MyContactManagerServices
 {
-  public class CategoriesService : ICategoriesService
+    public class CategoriesService : ICategoriesService
   {
     private readonly ICategoriesRepository _categoriesRepository;
 

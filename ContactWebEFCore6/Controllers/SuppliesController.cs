@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using ContactWebModels;
 using MyContactManagerData;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using MyContactManagerServices;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using MyContactManagerServices.interfaces;
 
 namespace SupplyWebEFCore6.Controllers
 {
@@ -34,7 +34,7 @@ namespace SupplyWebEFCore6.Controllers
     private async Task UpdateCategoriesAndResetModelCategories(Supply supply)
     {
       ModelState.Clear();
-      var category = _allCategories.SingleOrDefault(x => x.Id == supply.CategoryId);
+      var category = _allCategories.SingleOrDefault(x => x.Id == supply.Category.Id);
       supply.Category = category;
       TryValidateModel(supply);
     }

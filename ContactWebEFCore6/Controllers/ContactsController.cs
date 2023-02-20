@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using ContactWebModels;
 using MyContactManagerData;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using MyContactManagerServices;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.Extensions.Caching.Memory;
+using MyContactManagerServices.interfaces;
 
 namespace ContactWebEFCore6.Controllers
 {
-  [Authorize]
+    [Authorize]
   public class ContactsController : Controller
   {
     private readonly IContactsService _contactsService;
@@ -40,6 +40,7 @@ namespace ContactWebEFCore6.Controllers
       var state = _allStates.SingleOrDefault(x => x.Id == contact.StateId);
       contact.State = state;
       TryValidateModel(contact);
+      
     }
 
     protected async Task<string> GetCurrentUserId()

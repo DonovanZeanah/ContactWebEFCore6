@@ -1,5 +1,6 @@
 ﻿using ContactWebModels;
-using MyContactManagerRepositories;
+using MyContactManagerRepositories.interfaces;
+using MyContactManagerServices.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MyContactManagerServices
 {
-  public class ContactsService : IContactsService
+    public class ContactsService : IContactsService
   {
     private IContactsRepository _repository;
 

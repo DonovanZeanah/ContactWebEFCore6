@@ -1,5 +1,6 @@
 ﻿using ContactWebModels;
-using MyContactManagerRepositories;
+using MyContactManagerRepositories.interfaces;
+using MyContactManagerServices.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MyContactManagerServices
 {
-  public class StatesService : IStatesService
+    public class StatesService : IStatesService
   {
     private readonly IStatesRepository _statesRepository;
 

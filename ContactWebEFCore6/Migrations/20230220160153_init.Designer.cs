@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContactWebEFCore6.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230124080335_init")]
+    [Migration("20230220160153_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

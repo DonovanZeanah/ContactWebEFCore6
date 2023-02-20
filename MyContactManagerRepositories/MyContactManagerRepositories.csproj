@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="interfaces\IPupilsRepository.cs" />
+    <Compile Remove="LecturesRepository.cs" />
+    <Compile Remove="MockPupilsRepository.cs" />
+    <Compile Remove="PupilsRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MyContactManagerData\MyContactManagerData.csproj" />
   </ItemGroup>
 

@@ -1,6 +1,7 @@
 ﻿using ContactWebModels;
 using Microsoft.EntityFrameworkCore;
 using MyContactManagerData;
+using MyContactManagerRepositories.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MyContactManagerRepositories
 {
-  public class ContactsRepository : IContactsRepository
+    public class ContactsRepository : IContactsRepository
   {
     private readonly MyContactManagerDbContext _context;
 

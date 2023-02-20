@@ -1,0 +1,24 @@
+﻿@model IEnumerable<ContactWebModels.Lecture>
+
+<h1>Pupils and Their Courses</h1>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Courses</th>
+    </tr>
+  @foreach (var pupil in Model)
+  {
+      <tr>
+          <td>@Html.DisplayFor(modelItem => pupil.ToString())</td>
+          <td>
+              <ul>
+          @foreach (var lecture in pupil.ToString())
+          {
+                    <li>@lecture.ToString()</li>
+          }
+              </ul>
+          </td>
+      </tr>
+  }
+</table>

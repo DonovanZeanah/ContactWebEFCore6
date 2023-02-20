@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyContactManagerData;
 using MyContactManagerRepositories;
+using MyContactManagerRepositories.interfaces;
 using MyContactManagerServices;
+using MyContactManagerServices.interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,6 +69,20 @@ builder.Services.AddScoped<ICategoriesService, CategoriesService>();
 
 builder.Services.AddScoped<ISuppliesRepository, SuppliesRepository>();
 builder.Services.AddScoped<ISuppliesService, SuppliesService>();
+
+//builder.Services.AddScoped<ILecturesRepository, LecturesRepository> ();
+//builder.Services.AddScoped <ILecturesService, LecturesService> ();
+
+//builder.Services.AddScoped <IPupilsRepository, PupilsRepository> ();
+//builder.Services.AddScoped <IPupilsService, PupilsService> ();
+
+builder.Services.AddScoped <IStudentsRepository, StudentsRepository> ();
+builder.Services.AddScoped <IStudentsService, StudentsService> ();
+
+builder.Services.AddScoped <ICoursesRepository, CoursesRepository> ();
+builder.Services.AddScoped <ICoursesService, CoursesService> ();
+
+
 
 
 

@@ -10,12 +10,12 @@ using MyContactManagerData;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Caching.Memory;
 using ContactWebEFCore6.Models;
-using MyContactManagerServices;
 using Microsoft.AspNetCore.Authorization;
+using MyContactManagerServices.interfaces;
 
 namespace ContactWebEFCore6.Controllers
 {
-  [Authorize(Roles = "Admin, SuperAdmin")]
+    [Authorize(Roles = "Admin, SuperAdmin")]
 
   public class CategoriesController : Controller
     {
